@@ -1,3 +1,6 @@
+
+
+
 fn largest_i32(list: &[i32]) -> &i32 {
   let mut largest = &list[0];
 
@@ -47,12 +50,6 @@ impl<T> Point2<T> {
   }
 }
 
-impl Point2<f32> {
-  fn distance_from_origin(&self) -> f32 {
-    (self.x.powi(2) + self.y.powi(2)).sqrt()
-  }
-}
-
 struct Point3<X1, Y1>{
   x: X1,
   y: Y1,
@@ -68,6 +65,23 @@ impl<X1, Y1> Point3<X1, Y1>{
 }
 
 fn main() {
+
+  pub trait Summary {
+    fn summarize(&self) -> String;
+  }
+
+  pub struct NewsArticle {
+    pub headline: String,
+    pub location: String,
+    pub author: String,
+    pub content: String,
+  }
+
+  impl Summary for NewsArticle {
+    fn summarize(&self) -> String {
+      format!("{}, by {} ({})", self.headline, self.location, self.author)
+    }
+  }
   // removing duplication by extrating function
   // generics help to dry duplicates
 
@@ -130,5 +144,36 @@ fn main() {
   println!("p3.x = {}, p3.y = {}", p3.x, p3.y);
   println!();
 
+  // Generic Lifetimes
+
+  let x = 5;            // ----------+-- 'b
+                          //           |
+  let r = &x;           // --+-- 'a  |
+                          //   |       |
+  println!("r: {}", r);
+
+  println!();
+
+  fn longest<'a>(x: &'a str, y: &'a str) -> &'a str {
+    if x.len() > y.len() {
+        x
+    } else {
+        y
+    }
+  }
+
+  let string1 = String::from("abcd");
+  let string2 = "xyz";
+
+  let result = longest(string1.as_str(), string2);
+  println!("The longest string is {}", result);
+
+  println!();
+
 
 }
+
+
+
+
+
